@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dharitri-sdk-core"
+version = "0.0.1"
+authors = [
+  { name="Dharitri" },
+]
+license = "MIT"
+description = "Core components of the Dharitri Python SDK."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "pycryptodomex==3.16.0"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Dharitri-org/drt-sdk-py-core"
