@@ -34,11 +34,11 @@ def test_address_with_custom_hrp():
 
 def test_address_factory():
     factory_foo = AddressFactory("foo")
-    factory_erd = AddressFactory("moa")
+    factory_moa = AddressFactory("moa")
     pubkey = bytes.fromhex("0139472eff6886771a982f3083da5d421f24c29181e63888228dc81ca60d69e1")
 
     assert factory_foo.create_from_public_key(pubkey).to_bech32() == "foo1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssunhpj4"
-    assert factory_erd.create_from_public_key(pubkey).to_bech32() == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
+    assert factory_moa.create_from_public_key(pubkey).to_bech32() == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
 
 
 def test_is_valid_bech32():
