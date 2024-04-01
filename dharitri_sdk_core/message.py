@@ -12,7 +12,7 @@ class Message:
 class MessageComputer:
     """
     Also see: 
-     - https://github.com/dharitri/mx-sdk-js-core/blob/v11.2.0/src/signableMessage.ts
+     - https://github.com/Dharitri-org/drt-sdk-js-core/blob/v11.2.0/src/signableMessage.ts
      - https://eips.ethereum.org/EIPS/eip-712 (in the past, it served as a basis for the implementation)
     """
 

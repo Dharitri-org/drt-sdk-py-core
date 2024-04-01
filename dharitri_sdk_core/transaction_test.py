@@ -162,7 +162,7 @@ class TestTransaction:
         tx_hash = self.transaction_computer.compute_transaction_hash(transaction)
         assert tx_hash.hex() == "010347ada2669f563ad5c6d339afb5ccdb4cf299aee8af9ec7acca24acd006cf"
 
-    # this test was done to mimic the one in mx-chain-go
+    # this test was done to mimic the one in drt-chain-go
     def test_compute_transaction_with_dummy_guardian(self):
         alice_private_key_hex = "413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9"
         alice_secret_key = UserSecretKey(bytes.fromhex(alice_private_key_hex))
