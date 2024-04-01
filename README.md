@@ -1,4 +1,4 @@
-# mx-sdk-py-core
+# drt-sdk-py-core
 
 Core components of the Dharitri Python SDK.
 
