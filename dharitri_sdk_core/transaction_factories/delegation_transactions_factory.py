@@ -1,4 +1,4 @@
-from typing import List, Protocol, Sequence
+from typing import Protocol, Sequence
 
 from dharitri_sdk_core.address import Address
 from dharitri_sdk_core.constants import DELEGATION_MANAGER_SC_ADDRESS
@@ -54,7 +54,7 @@ class DelegationTransactionsFactory:
                                             sender: IAddress,
                                             delegation_contract: IAddress,
                                             public_keys: Sequence[IValidatorPublicKey],
-                                            signed_messages: List[bytes]) -> Transaction:
+                                            signed_messages: Sequence[bytes]) -> Transaction:
         if len(public_keys) != len(signed_messages):
             raise ErrListsLengthMismatch("The number of public keys should match the number of signed messages")
 
@@ -85,7 +85,7 @@ class DelegationTransactionsFactory:
                                               public_keys: Sequence[IValidatorPublicKey]) -> Transaction:
         num_nodes = len(public_keys)
 
-        parts: List[str] = ["removeNodes"]
+        parts = ["removeNodes"]
         for public_key in public_keys:
             parts.append(public_key.hex())
 
@@ -323,3 +323,70 @@ class DelegationTransactionsFactory:
         ).build()
 
         return transaction
+
+    def create_transaction_for_delegating(self,
+                                          sender: IAddress,
+                                          delegation_contract: IAddress,
+                                          amount: int) -> Transaction:
+        return TransactionBuilder(
+            config=self.config,
+            sender=sender,
+            receiver=delegation_contract,
+            data_parts=["delegate"],
+            gas_limit=12000000,
+            add_data_movement_gas=False,
+            amount=amount
+        ).build()
+
+    def create_transaction_for_claiming_rewards(self,
+                                                sender: IAddress,
+                                                delegation_contract: IAddress) -> Transaction:
+        return TransactionBuilder(
+            config=self.config,
+            sender=sender,
+            receiver=delegation_contract,
+            data_parts=["claimRewards"],
+            gas_limit=6000000,
+            add_data_movement_gas=False,
+            amount=0
+        ).build()
+
+    def create_transaction_for_redelegating_rewards(self,
+                                                    sender: IAddress,
+                                                    delegation_contract: IAddress) -> Transaction:
+        return TransactionBuilder(
+            config=self.config,
+            sender=sender,
+            receiver=delegation_contract,
+            data_parts=["reDelegateRewards"],
+            gas_limit=12000000,
+            add_data_movement_gas=False,
+            amount=0
+        ).build()
+
+    def create_transaction_for_undelegating(self,
+                                            sender: IAddress,
+                                            delegation_contract: IAddress,
+                                            amount: int) -> Transaction:
+        return TransactionBuilder(
+            config=self.config,
+            sender=sender,
+            receiver=delegation_contract,
+            data_parts=["unDelegate", arg_to_string(amount)],
+            gas_limit=12000000,
+            add_data_movement_gas=False,
+            amount=0
+        ).build()
+
+    def create_transaction_for_withdrawing(self,
+                                           sender: IAddress,
+                                           delegation_contract: IAddress) -> Transaction:
+        return TransactionBuilder(
+            config=self.config,
+            sender=sender,
+            receiver=delegation_contract,
+            data_parts=["withdraw"],
+            gas_limit=12000000,
+            add_data_movement_gas=False,
+            amount=0
+        ).build()

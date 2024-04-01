@@ -9,7 +9,7 @@ from dharitri_sdk_core.constants import (DEFAULT_HRP, DIGEST_SIZE,
                                            TRANSACTION_OPTIONS_DEFAULT,
                                            TRANSACTION_VERSION_DEFAULT)
 from dharitri_sdk_core.errors import NotEnoughGasError
-from dharitri_sdk_core.interfaces import INetworkConfig
+from dharitri_sdk_core.interfaces import INetworkConfig, ITransaction
 from dharitri_sdk_core.proto.transaction_serializer import ProtoSerializer
 
 
@@ -31,7 +31,7 @@ class Transaction:
                  gas_limit: int,
                  chain_id: str,
                  nonce: Optional[int] = None,
-                 amount: Optional[int] = None,
+                 value: Optional[int] = None,
                  sender_username: Optional[str] = None,
                  receiver_username: Optional[str] = None,
                  gas_price: Optional[int] = None,
@@ -42,13 +42,13 @@ class Transaction:
                  signature: Optional[bytes] = None,
                  guardian_signature: Optional[bytes] = None
                  ) -> None:
-        self.chainID = chain_id
+        self.chain_id = chain_id
         self.sender = sender
         self.receiver = receiver
         self.gas_limit = gas_limit
 
         self.nonce = nonce or 0
-        self.amount = amount or 0
+        self.value = value or 0
         self.data = data or bytes()
         self.signature = signature or bytes()
 
@@ -67,7 +67,7 @@ class TransactionComputer:
     def __init__(self) -> None:
         pass
 
-    def compute_transaction_fee(self, transaction: Transaction, network_config: INetworkConfig) -> int:
+    def compute_transaction_fee(self, transaction: ITransaction, network_config: INetworkConfig) -> int:
         move_balance_gas = network_config.min_gas_limit + len(transaction.data) * network_config.gas_per_data_byte
         if move_balance_gas > transaction.gas_limit:
             raise NotEnoughGasError(transaction.gas_limit)
@@ -82,21 +82,21 @@ class TransactionComputer:
 
         return int(fee_for_move + processing_fee)
 
-    def compute_bytes_for_signing(self, transaction: Transaction) -> bytes:
+    def compute_bytes_for_signing(self, transaction: ITransaction) -> bytes:
         dictionary = self._to_dictionary(transaction)
         serialized = self._dict_to_json(dictionary)
         return serialized
 
-    def compute_transaction_hash(self, transaction: Transaction) -> bytes:
+    def compute_transaction_hash(self, transaction: ITransaction) -> bytes:
         proto = ProtoSerializer()
         serialized_tx = proto.serialize_transaction(transaction)
         tx_hash = blake2b(serialized_tx, digest_size=DIGEST_SIZE).hexdigest()
         return bytes.fromhex(tx_hash)
 
-    def _to_dictionary(self, transaction: Transaction) -> Dict[str, Any]:
+    def _to_dictionary(self, transaction: ITransaction) -> Dict[str, Any]:
         dictionary: Dict[str, Any] = OrderedDict()
         dictionary["nonce"] = transaction.nonce
-        dictionary["value"] = str(transaction.amount)
+        dictionary["value"] = str(transaction.value)
 
         dictionary["receiver"] = transaction.receiver
         dictionary["sender"] = transaction.sender
@@ -113,7 +113,7 @@ class TransactionComputer:
         if transaction.data:
             dictionary["data"] = b64encode(transaction.data).decode()
 
-        dictionary["chainID"] = transaction.chainID
+        dictionary["chainID"] = transaction.chain_id
 
         if transaction.version:
             dictionary["version"] = transaction.version

@@ -29,7 +29,7 @@ class TestTransaction:
             nonce=89,
             sender=sender,
             receiver=receiver,
-            amount=0,
+            value=0,
             gas_limit=50000,
             gas_price=1000000000,
             chain_id="D",
@@ -42,7 +42,7 @@ class TestTransaction:
             nonce=90,
             sender=sender,
             receiver=receiver,
-            amount=1000000000000000000,
+            value=1000000000000000000,
             data=b"hello",
             gas_limit=70000,
             gas_price=1000000000,
@@ -61,13 +61,11 @@ class TestTransaction:
             gas_limit=50000,
             sender_username="carol",
             receiver_username="alice",
-            amount=1000000000000000000
+            value=1000000000000000000
         )
-        # needs to match the test from sdk-js-core
-        transaction.version = 1
 
         transaction.signature = self.carol.secret_key.sign(self.transaction_computer.compute_bytes_for_signing(transaction))
-        assert transaction.signature.hex() == "876ee51c4f3615fa9857ef0e5ba924cc0ec9ded054558528f1790edc7e482a88ae2dd26a2411ca8ec98ee238695a7a33ed3f27044c2d85f8559d907058760200"
+        assert transaction.signature.hex() == "3f3f645f9ac38142c1087a76b855e48ed0aa44185146df5f3317b8887e7b59f195d6093d3c2b30fb693a27e3175a199ef04a6e650101ab3f4b3649f0fe2f5204"
 
     def test_compute_transaction_hash(self):
         transaction = Transaction(
@@ -76,7 +74,7 @@ class TestTransaction:
             gas_limit=100000,
             chain_id="D",
             nonce=17243,
-            amount=1000000000000,
+            value=1000000000000,
             data=b"testtx",
             version=2,
             signature=bytes.fromhex("eaa9e4dfbd21695d9511e9754bde13e90c5cfb21748a339a79be11f744c71872e9fe8e73c6035c413f5f08eef09e5458e9ea6fc315ff4da0ab6d000b450b2a07")
@@ -91,7 +89,7 @@ class TestTransaction:
             gas_limit=100000,
             chain_id="D",
             nonce=17244,
-            amount=1000000000000,
+            value=1000000000000,
             data=b"testtx",
             version=2,
             sender_username="alice",
@@ -150,7 +148,7 @@ class TestTransaction:
             gas_price=1000000000,
             chain_id="D",
             nonce=2,
-            amount=1000000000000000000,
+            value=1000000000000000000,
             data=b"this is a test transaction",
             version=2,
             options=2,
@@ -164,7 +162,7 @@ class TestTransaction:
         tx_hash = self.transaction_computer.compute_transaction_hash(transaction)
         assert tx_hash.hex() == "010347ada2669f563ad5c6d339afb5ccdb4cf299aee8af9ec7acca24acd006cf"
 
-    # this test was done to mimic the one in mx-chain-go
+    # this test was done to mimic the one in drt-chain-go
     def test_compute_transaction_with_dummy_guardian(self):
         alice_private_key_hex = "413f42575f7f26fad3317a778771212fdb80245850981e48b58a4f25e344e8f9"
         alice_secret_key = UserSecretKey(bytes.fromhex(alice_private_key_hex))
@@ -179,7 +177,7 @@ class TestTransaction:
             version=2,
             options=2,
             nonce=92,
-            amount=123456789000000000000000000000,
+            value=123456789000000000000000000000,
             guardian="moa1x23lzn8483xs2su4fak0r0dqx6w38enpmmqf2yrkylwq7mfnvyhstcgmz5",
             guardian_signature=bytes([0] * 64)
         )

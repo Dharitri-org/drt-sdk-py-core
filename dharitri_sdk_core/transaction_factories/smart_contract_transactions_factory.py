@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, List, Protocol, Union
+from typing import Any, List, Protocol, Sequence, Union
 
 from dharitri_sdk_core import Transaction
 from dharitri_sdk_core.address import Address
@@ -7,9 +7,8 @@ from dharitri_sdk_core.code_metadata import CodeMetadata
 from dharitri_sdk_core.constants import (CONTRACT_DEPLOY_ADDRESS,
                                            VM_TYPE_WASM_VM)
 from dharitri_sdk_core.errors import BadUsageError
-from dharitri_sdk_core.interfaces import IAddress
+from dharitri_sdk_core.interfaces import IAddress, IToken, ITokenTransfer
 from dharitri_sdk_core.serializer import arg_to_string, args_to_strings
-from dharitri_sdk_core.tokens import Token, TokenTransfer
 from dharitri_sdk_core.transaction_factories.token_transfers_data_builder import \
     TokenTransfersDataBuilder
 from dharitri_sdk_core.transaction_factories.transaction_builder import \
@@ -23,7 +22,7 @@ class IConfig(Protocol):
 
 
 class ITokenComputer(Protocol):
-    def is_fungible(self, token: Token) -> bool:
+    def is_fungible(self, token: IToken) -> bool:
         ...
 
     def extract_identifier_from_extended_identifier(self, identifier: str) -> str:
@@ -40,7 +39,7 @@ class SmartContractTransactionsFactory:
                                       sender: IAddress,
                                       bytecode: Union[Path, bytes],
                                       gas_limit: int,
-                                      arguments: List[Any] = [],
+                                      arguments: Sequence[Any] = [],
                                       native_transfer_amount: int = 0,
                                       is_upgradeable: bool = True,
                                       is_readable: bool = True,
@@ -76,9 +75,9 @@ class SmartContractTransactionsFactory:
                                        contract: IAddress,
                                        function: str,
                                        gas_limit: int,
-                                       arguments: List[Any] = [],
+                                       arguments: Sequence[Any] = [],
                                        native_transfer_amount: int = 0,
-                                       token_transfers: List[TokenTransfer] = []) -> Transaction:
+                                       token_transfers: Sequence[ITokenTransfer] = []) -> Transaction:
         number_of_tokens = len(token_transfers)
         receiver = contract
 
@@ -121,7 +120,7 @@ class SmartContractTransactionsFactory:
                                        contract: IAddress,
                                        bytecode: Union[Path, bytes],
                                        gas_limit: int,
-                                       arguments: List[Any] = [],
+                                       arguments: Sequence[Any] = [],
                                        native_transfer_amount: int = 0,
                                        is_upgradeable: bool = True,
                                        is_readable: bool = True,

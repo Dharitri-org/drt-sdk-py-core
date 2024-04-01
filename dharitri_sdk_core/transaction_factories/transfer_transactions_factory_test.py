@@ -21,8 +21,8 @@ class TestTransferTransactionsFactory:
 
         assert transaction.sender == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
         assert transaction.receiver == "moa1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruq0yu4wk"
-        assert transaction.amount == 1000000000000000000
-        assert transaction.chainID == "D"
+        assert transaction.value == 1000000000000000000
+        assert transaction.chain_id == "D"
         assert transaction.gas_limit == 50_000
         assert transaction.data == b""
 
@@ -39,8 +39,8 @@ class TestTransferTransactionsFactory:
 
         assert transaction.sender == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
         assert transaction.receiver == "moa1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruq0yu4wk"
-        assert transaction.amount == 1000000000000000000
-        assert transaction.chainID == "D"
+        assert transaction.value == 1000000000000000000
+        assert transaction.chain_id == "D"
         assert transaction.gas_limit == 63_500
         assert transaction.data == b"test data"
 
@@ -59,8 +59,8 @@ class TestTransferTransactionsFactory:
 
         assert transaction.sender == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
         assert transaction.receiver == "moa1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruq0yu4wk"
-        assert transaction.amount == 0
-        assert transaction.chainID == "D"
+        assert transaction.value == 0
+        assert transaction.chain_id == "D"
         assert transaction.data.decode() == "DCTTransfer@464f4f2d313233343536@0f4240"
         assert transaction.gas_limit == 408_500
 
@@ -79,8 +79,8 @@ class TestTransferTransactionsFactory:
 
         assert transaction.sender == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
         assert transaction.receiver == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
-        assert transaction.amount == 0
-        assert transaction.chainID == "D"
+        assert transaction.value == 0
+        assert transaction.chain_id == "D"
         assert transaction.data.decode() == "DCTNFTTransfer@4e46542d313233343536@0a@01@8049d639e5a6980d1cd2392abcce41029cda74a1563523a202f09641cc2618f8"
         assert transaction.gas_limit == 1_209_000
 
@@ -102,7 +102,7 @@ class TestTransferTransactionsFactory:
 
         assert transaction.sender == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
         assert transaction.receiver == "moa1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssfq94h8"
-        assert transaction.amount == 0
-        assert transaction.chainID == "D"
+        assert transaction.value == 0
+        assert transaction.chain_id == "D"
         assert transaction.data.decode() == "MultiDCTNFTTransfer@8049d639e5a6980d1cd2392abcce41029cda74a1563523a202f09641cc2618f8@02@4e46542d313233343536@0a@01@544553542d393837363534@01@01"
         assert transaction.gas_limit == 1_464_500

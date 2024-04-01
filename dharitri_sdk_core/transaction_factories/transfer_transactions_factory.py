@@ -1,8 +1,7 @@
-from typing import List, Optional, Protocol
+from typing import List, Optional, Protocol, Sequence
 
 from dharitri_sdk_core.errors import BadUsageError
-from dharitri_sdk_core.interfaces import IAddress
-from dharitri_sdk_core.tokens import Token, TokenTransfer
+from dharitri_sdk_core.interfaces import IAddress, IToken, ITokenTransfer
 from dharitri_sdk_core.transaction import Transaction
 from dharitri_sdk_core.transaction_factories.token_transfers_data_builder import \
     TokenTransfersDataBuilder
@@ -23,7 +22,7 @@ class IConfig(Protocol):
 
 
 class ITokenComputer(Protocol):
-    def is_fungible(self, token: Token) -> bool:
+    def is_fungible(self, token: IToken) -> bool:
         ...
 
     def extract_identifier_from_extended_identifier(self, identifier: str) -> str:
@@ -55,7 +54,7 @@ class TransferTransactionsFactory:
     def create_transaction_for_dct_token_transfer(self,
                                                    sender: IAddress,
                                                    receiver: IAddress,
-                                                   token_transfers: List[TokenTransfer]) -> Transaction:
+                                                   token_transfers: Sequence[ITokenTransfer]) -> Transaction:
         data_parts: List[str] = []
         extra_gas_for_transfer = 0
 
