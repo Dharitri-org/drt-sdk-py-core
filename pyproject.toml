@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dharitri-sdk-core"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Dharitri" },
 ]
@@ -18,8 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "pycryptodomex==3.16.0"
+  "pycryptodomex==3.16.0",
+  "protobuf==3.20.1"
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Dharitri-org/drt-sdk-py-core"
+"Homepage" = "https://github.com/dharitri/mx-sdk-py-core"

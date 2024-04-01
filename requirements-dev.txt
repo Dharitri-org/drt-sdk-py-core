@@ -1,4 +1,4 @@
 pytest
 flake8
 autopep8
-dharitri-sdk-wallet==0.0.1
+dharitri-sdk-wallet>=0.0.1

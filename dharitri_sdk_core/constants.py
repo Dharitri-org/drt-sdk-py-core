@@ -14,3 +14,8 @@ MOAX_NUM_DECIMALS = 18
 DELEGATION_MANAGER_SC_ADDRESS = "moa1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqylllsjrx4c2"
 DEFAULT_HRP = "moa"
 CONTRACT_DEPLOY_ADDRESS = "moa1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqhsx6tv"
+TRANSACTION_OPTIONS_TX_GUARDED = 0b0010
+
+DIGEST_SIZE = 32
+
+TOKEN_RANDOM_SEQUENCE_LENGTH = 6
