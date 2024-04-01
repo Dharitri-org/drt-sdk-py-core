@@ -3,7 +3,9 @@ from typing import Protocol
 
 
 class IAddress(Protocol):
-    def bech32(self) -> str: ...
+    def to_bech32(self) -> str: ...
+
+    def to_hex(self) -> str: ...
 
 
 INonce = int
@@ -14,6 +16,7 @@ ITransactionVersion = int
 ITransactionOptions = int
 ISignature = bytes
 ITokenIdentifier = str
+IGasPerDataByte = int
 
 
 class ITokenPayment(Protocol):
@@ -37,3 +40,15 @@ class ITransactionPayload(Protocol):
 
 class ICodeMetadata(Protocol):
     def serialize(self) -> bytes: ...
+
+
+class INetworkConfig(Protocol):
+    min_gas_limit: IGasLimit
+    gas_per_data_byte: IGasPerDataByte
+    gas_price_modifier: float
+    chain_id: IChainID
+
+
+class IValidatorPublicKey(Protocol):
+    def hex(self) -> str:
+        ...
